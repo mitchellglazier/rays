@@ -1,0 +1,125 @@
+
+<mat-form-field class="search-todos">
+    <mat-label>Search Name</mat-label>
+    <mat-icon matPrefix style="position: relative; top: 5px; margin-right: 5px"
+      >search</mat-icon
+    >
+    <input
+      autocomplete="off"
+      matInput
+      type="text"
+      [(ngModel)]="pitcherSearch"
+      (keyup)="search()"
+    />
+    <button
+      *ngIf="pitcherSearch"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="clearSearch()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+<div fxLayout="row" fxLayoutAlign="space-around start">
+  <cdk-virtual-scroll-viewport [itemSize]="5" class ="cdk-viewport" fxFlex>
+    <table style="margin: 20px; width:95%">
+        <thead>
+          <tr class="headings">
+            <td>Player ID</td>
+            <td>Name</td>
+            <td>Position</td>
+            <td>Level</td>
+            <td>Actual Level</td>
+            <td>Roster Status</td>
+            <td>Age</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *cdkVirtualFor="let row of searchPitchers; trackBy: trackByFn;" (click)="selectRow(row)" style="cursor:pointer">
+            <td>{{row.player_id}}</td>
+            <td>{{row.name}}</td>
+            <td>{{row.position}}</td>
+            <td>{{row.level}}</td>
+            <td>{{row.actual_level}}</td>
+            <td>{{row.roster_status}}</td>
+            <td>{{row.age}}</td>
+            
+          </tr>
+        </tbody>
+      </table>
+    </cdk-virtual-scroll-viewport>
+    <div *ngIf="pitcherSelected" fxFlex="35">
+      <mat-card style="margin-right: 5px;">
+          <mat-card-header>
+              <mat-card-title>{{pitcherSelected.name}}</mat-card-title>
+              <mat-card-subtitle>{{pitcherSelected.player_id}}</mat-card-subtitle>
+          </mat-card-header>
+          <mat-card-content>
+              <div fxLayout="row" fxLayoutAlign="space-around start">
+                  <div fxFlex="25">
+                      <div fxLayout="column" fxLayoutAlign="space-around start">
+                          <p>Position: {{pitcherSelected.position}}</p>
+                          <p>Level: {{pitcherSelected.level}}</p>
+                          <p>Actual Level: {{pitcherSelected.actual_level}}</p>
+                          <p>Roster Status: {{pitcherSelected.roster_status}}</p>
+                          <p>Age: {{pitcherSelected.age}}</p>
+                          <p>G: {{pitcherSelected.g}}</p>
+                          <p>AB: {{pitcherSelected.ab || "--"}}</p>
+                          <p>BF: {{pitcherSelected.bf}}</p>
+                          <p>GS: {{pitcherSelected.gs}}</p>
+                          <p>W: {{pitcherSelected.w}}</p>
+                      </div>
+                  </div>
+                  <div fxFlex="25">
+                      <div fxLayout="column" fxLayoutAlign="space-around start">
+                          <p>L: {{pitcherSelected.l}}</p>
+                          <p>S: {{pitcherSelected.s}}</p>
+                          <p>IP: {{pitcherSelected.ip}}</p>
+                          <p>H: {{pitcherSelected.h}}</p>
+                          <p>R: {{pitcherSelected.r}}</p>
+                          <p>ER: {{pitcherSelected.er}}</p>
+                          <p>ERA: {{pitcherSelected.era}}</p>
+                          <p>Whip: {{pitcherSelected.whip}}</p>
+                          <p>HR: {{pitcherSelected.hr}}</p>
+                          <p>BB: {{pitcherSelected.bb}}</p>
+                      </div>
+
+                  </div>
+                  <div fxFlex="25">
+                      <div fxLayout="column" fxLayoutAlign="space-around start">
+                          <p>SO: {{pitcherSelected.so}}</p>
+                          <p>BB Rate: {{pitcherSelected.bb_rate}}</p>
+                          <p>SO Rate: {{pitcherSelected.so_rate}}</p>
+                          <p>K 9: {{pitcherSelected.k_9}}</p>
+                          <p>BB 9: {{pitcherSelected.bb_9}}</p>
+                          <p>K BB: {{pitcherSelected.k_bb}}</p>
+                          <p>GB Rate: {{pitcherSelected.gb_rate}}</p>
+                          <p>LD Rate: {{pitcherSelected.ld_rate}}</p>
+                          <p>FB Rate: {{pitcherSelected.fb_rate}}</p>
+                          <p>BABIP: {{pitcherSelected.babip}}</p>
+                      </div>
+
+                  </div>
+                  <div fxFlex="25">
+                      <div fxLayout="column" fxLayoutAlign="space-around start">
+                          <p>GB FB Rate: {{pitcherSelected.gb_fb_rate}}</p>
+                          <p>HR FB Rate: {{pitcherSelected.hr_fb_rate}}</p>
+                          <p>RAR: {{pitcherSelected.rar}}</p>
+                          <p>WAR: {{pitcherSelected.war}}</p>
+                          <p>SW Strike Rate: {{pitcherSelected.sw_strike_rate}}</p>
+                          <p>Hard Hit Rate: {{pitcherSelected.hard_hit_rate}}</p>
+                          <p>Contact Rate: {{pitcherSelected.contact_rate}}</p>
+                          <p>Fip: {{pitcherSelected.fip}}</p>
+                          <p>xFip: {{pitcherSelected.xfip}}</p>
+                          <p>Barrel Rate: {{pitcherSelected.barrel_rate}}</p>
+                      </div>
+
+                  </div>
+              </div>
+          </mat-card-content>
+      </mat-card>
+  </div>
+</div>
+
+

@@ -1,0 +1,125 @@
+<mat-form-field class="search-todos">
+    <mat-label>Search Name or Position</mat-label>
+    <mat-icon matPrefix style="position: relative; top: 5px; margin-right: 5px"
+      >search</mat-icon
+    >
+    <input
+      autocomplete="off"
+      matInput
+      type="text"
+      [(ngModel)]="hitterSearch"
+      (keyup)="search()"
+    />
+    <button
+      *ngIf="hitterSearch"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="clearSearch()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+<div fxLayout="row" fxLayoutAlign="space-around start" >
+    <cdk-virtual-scroll-viewport [itemSize]="20" class ="cdk-viewport" fxFlex>
+        <table style="margin: 20px; width:95%">
+            <thead>
+              <tr class="headings">
+                <td>Player ID</td>
+                <td>Name</td>
+                <td>Position</td>
+                <td>Level</td>
+                <td>Actual Level</td>
+                <td>Roster Status</td>
+                <td>Age</td>
+              </tr>
+            </thead>
+            <tbody>
+                
+                    <tr *cdkVirtualFor="let row of searchHitters; trackBy: trackByFn;" (click)="selectRow(row)" style="cursor:pointer">
+                        <td>{{row.player_id}}</td>
+                        <td>{{row.name}}</td>
+                        <td>{{row.position}}</td>
+                        <td>{{row.level}}</td>
+                        <td>{{row.actual_level}}</td>
+                        <td>{{row.roster_status}}</td>
+                        <td>{{row.age}}</td>
+                      </tr>
+                
+            </tbody>
+          </table>
+    </cdk-virtual-scroll-viewport>
+    <div *ngIf="hitterSelected" fxFlex="35">
+        <mat-card style="margin-right: 5px;">
+            <mat-card-header>
+                <mat-card-title>{{hitterSelected.name}}</mat-card-title>
+                <mat-card-subtitle>{{hitterSelected.player_id}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div fxLayout="row" fxLayoutAlign="space-around start">
+                    <div fxFlex="25">
+                        <div fxLayout="column" fxLayoutAlign="space-around start">
+                            <p>Position: {{hitterSelected.position}}</p>
+                            <p>Level: {{hitterSelected.level}}</p>
+                            <p>Actual Level: {{hitterSelected.actual_level}}</p>
+                            <p>Roster Status: {{hitterSelected.roster_status}}</p>
+                            <p>Age: {{hitterSelected.age}}</p>
+                            <p>G: {{hitterSelected.g}}</p>
+                            <p>AB: {{hitterSelected.ab}}</p>
+                            <p>PA: {{hitterSelected.pa}}</p>
+                            <p>H: {{hitterSelected.h}}</p>
+                            <p>D: {{hitterSelected.d}}</p>
+                        </div>
+                    </div>
+                    <div fxFlex="25">
+                        <div fxLayout="column" fxLayoutAlign="space-around start">
+                            <p>T: {{hitterSelected.t}}</p>
+                            <p>R: {{hitterSelected.r}}</p>
+                            <p>HR: {{hitterSelected.hr}}</p>
+                            <p>RBI: {{hitterSelected.rbi}}</p>
+                            <p>BB: {{hitterSelected.bb}}</p>
+                            <p>SO: {{hitterSelected.so}}</p>
+                            <p>SB: {{hitterSelected.sb}}</p>
+                            <p>CS: {{hitterSelected.cs}}</p>
+                            <p>SB Rate: {{hitterSelected.sb_rate | percent}}</p>
+                            <p>AVG: {{hitterSelected.avg}}</p>
+                        </div>
+
+                    </div>
+                    <div fxFlex="25">
+                        <div fxLayout="column" fxLayoutAlign="space-around start">
+                            <p>OPS: {{hitterSelected.ops}}</p>
+                            <p>OBP: {{hitterSelected.obp}}</p>
+                            <p>GB Rate: {{hitterSelected.gb_rate}}</p>
+                            <p>LD Rate: {{hitterSelected.ld_rate}}</p>
+                            <p>FB Rate: {{hitterSelected.fb_rate}}</p>
+                            <p>BB Rate: {{hitterSelected.bb_rate}}</p>
+                            <p>SO Rate: {{hitterSelected.so_rate}}</p>
+                            <p>SLG: {{hitterSelected.slg}}</p>
+                            <p>ISO: {{hitterSelected.iso}}</p>
+                            <p>BABIP: {{hitterSelected.babip}}</p>
+                        </div>
+
+                    </div>
+                    <div fxFlex="25">
+                        <div fxLayout="column" fxLayoutAlign="space-around start">
+                            <p>GB FB: {{hitterSelected.gb_fb}}</p>
+                            <p>HR FB Rate: {{hitterSelected.hr_fb_rate}}</p>
+                            <p>wOBA: {{hitterSelected.woba}}</p>
+                            <p>wRAA: {{hitterSelected.wraa}}</p>
+                            <p>Speed: {{hitterSelected.speed}}</p>
+                            <p>WRC+: {{hitterSelected.wrc_plus}}</p>
+                            <p>SW Strike Rate: {{hitterSelected.sw_strike_rate}}</p>
+                            <p>Hard Hit Rate: {{hitterSelected.hard_hit_rate}}</p>
+                            <p>Contact Rate: {{hitterSelected.contact_rate}}</p>
+                            <p>xwOBA: {{hitterSelected.xwoba}}</p>
+                        </div>
+
+                    </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+
