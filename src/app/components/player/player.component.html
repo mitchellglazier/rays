@@ -56,7 +56,7 @@
             <mat-card-content>
               <div fxLayout="row wrap" fxLayoutAlign="space-between start">
                   <div  fxFlex="25" *ngFor="let stat of playerSelected | keyvalue">
-                    <p>{{stat.key}}: {{stat.value || '--'}}</p>
+                    <p><b>{{stat.key}}:</b> {{stat.value || '--'}}</p>
                   </div>
               </div>
             </mat-card-content>
