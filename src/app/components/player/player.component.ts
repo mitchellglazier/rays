@@ -37,8 +37,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
     return index
   }
 
-  selectRow(hitter) {
-    this.playerSelected = hitter
+  selectRow(player) {
+    this.playerSelected = player;
   }
   clearSearch() {
     this.playerSearch = '';
