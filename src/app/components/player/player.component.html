@@ -1,0 +1,152 @@
+<mat-form-field class="search-todos">
+    <mat-label>Search Name or Position</mat-label>
+    <mat-icon matPrefix style="position: relative; top: 5px; margin-right: 5px"
+      >search</mat-icon
+    >
+    <input
+      autocomplete="off"
+      matInput
+      type="text"
+      [(ngModel)]="playerSearch"
+      (keyup)="search()"
+    />
+    <button
+      *ngIf="playerSearch"
+      matSuffix
+      mat-icon-button
+      aria-label="Clear"
+      (click)="clearSearch()"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+<div fxLayout="row" fxLayoutAlign="space-around start" >
+    <cdk-virtual-scroll-viewport [itemSize]="5" class ="cdk-viewport" fxFlex>
+        <table style="margin: 20px; width:95%">
+            <thead>
+              <tr class="headings">
+                <td>Player ID</td>
+                <td>Name</td>
+                <td>Position</td>
+                <td>Level</td>
+                <td>Actual Level</td>
+                <td>Roster Status</td>
+                <td>Age</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *cdkVirtualFor="let row of searchPlayers; trackBy: trackByFn;" (click)="selectRow(row)" style="cursor:pointer">
+                <td>{{row.player_id}}</td>
+                <td>{{row.name}}</td>
+                <td>{{row.position}}</td>
+                <td>{{row.level}}</td>
+                <td>{{row.actual_level}}</td>
+                <td>{{row.roster_status}}</td>
+                <td>{{row.age}}</td>
+              </tr>
+            </tbody>
+          </table>
+    </cdk-virtual-scroll-viewport>
+    <div *ngIf="playerSelected" fxFlex="35">
+        <mat-card style="margin-right: 5px;">
+            <mat-card-header>
+                <mat-card-title>{{playerSelected.name}}</mat-card-title>
+                <mat-card-subtitle>{{playerSelected.player_id}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <div fxLayout="row" fxLayoutAlign="space-around start">
+                  <div fxFlex="25">
+                    <div fxLayout="column" fxLayoutAlign="space-around start">
+                        <p>Position: {{playerSelected.position}}</p>
+                        <p>Level: {{playerSelected.level}}</p>
+                        <p>Actual Level: {{playerSelected.actual_level}}</p>
+                        <p>Roster Status: {{playerSelected.roster_status}}</p>
+                        <p>Age: {{playerSelected.age}}</p>
+                        <p>G: {{playerSelected.g}}</p>
+                        <p>AB: {{playerSelected.ab}}</p>
+                        <p>H: {{playerSelected.h}}</p>
+                        <p>R: {{playerSelected.r}}</p>
+                        <p>HR: {{playerSelected.hr}}</p>
+                    </div>
+                </div>
+                <div fxFlex="25">
+                  <div fxLayout="column" fxLayoutAlign="space-around start">
+                    <p>BB: {{playerSelected.bb}}</p>
+                    <p>SO: {{playerSelected.so}}</p>
+                    <p>BB Rate: {{playerSelected.bb_rate}}</p>
+                    <p>SO Rate: {{playerSelected.so_rate}}</p>
+                    <p>GB Rate: {{playerSelected.gb_rate}}</p>
+                    <p>LD Rate: {{playerSelected.ld_rate}}</p>
+                    <p>FB Rate: {{playerSelected.fb_rate}}</p>
+                    <p>BABIP: {{playerSelected.babip}}</p>
+                    <p>HR FB Rate: {{playerSelected.hr_fb_rate}}</p>
+                  </div>
+              </div>
+                    <div fxFlex="25" *ngIf="playerType === 'hitters'">
+                        <div fxLayout="column" fxLayoutAlign="space-around start">  
+                          <p>T: {{playerSelected.t}}</p>
+                          <p>RBI: {{playerSelected.rbi}}</p>
+                          <p>SB: {{playerSelected.sb}}</p>
+                          <p>CS: {{playerSelected.cs}}</p>
+                          <p>SB Rate: {{playerSelected.sb_rate | percent}}</p>
+                          <p>AVG: {{playerSelected.avg}}</p>
+                            <p>PA: {{playerSelected.pa}}</p>
+                            <p>D: {{playerSelected.d}}</p>
+                            <p>SLG: {{playerSelected.slg}}</p>
+                            <p>ISO: {{playerSelected.iso}}</p>
+                        </div>
+                    </div>
+                    <div fxFlex="25" *ngIf="playerType === 'hitters'">
+                        <div fxLayout="column" fxLayoutAlign="space-around start">
+                            <p>OPS: {{playerSelected.ops}}</p>
+                            <p>OBP: {{playerSelected.obp}}</p>
+                            <p>GB FB: {{playerSelected.gb_fb}}</p>
+                            <p>wOBA: {{playerSelected.woba}}</p>
+                            <p>wRAA: {{playerSelected.wraa}}</p>
+                            <p>Speed: {{playerSelected.speed}}</p>
+                            <p>WRC+: {{playerSelected.wrc_plus}}</p>
+                            <p>SW Strike Rate: {{playerSelected.sw_strike_rate}}</p>
+                            <p>Hard Hit Rate: {{playerSelected.hard_hit_rate}}</p>
+                            <p>Contact Rate: {{playerSelected.contact_rate}}</p>
+                            <p>xwOBA: {{playerSelected.xwoba}}</p>  
+                        </div>
+
+                    </div>
+                    <div fxFlex="25" *ngIf="playerType === 'pitchers'">
+                        <div fxLayout="column" fxLayoutAlign="space-around start">
+                          <p>BF: {{playerSelected.bf}}</p>
+                          <p>GS: {{playerSelected.gs}}</p>
+                          <p>W: {{playerSelected.w}}</p>
+                          <p>L: {{playerSelected.l}}</p>
+                          <p>S: {{playerSelected.s}}</p>
+                          <p>IP: {{playerSelected.ip}}</p>
+                            <p>ER: {{playerSelected.er}}</p>
+                            <p>ERA: {{playerSelected.era}}</p>
+                            <p>Whip: {{playerSelected.whip}}</p>
+                            <p>K 9: {{playerSelected.k_9}}</p>
+                        </div>
+
+                    </div>
+                    <div fxFlex="25" *ngIf="playerType === 'pitchers'">
+                      <div fxLayout="column" fxLayoutAlign="space-around start">
+                        <p>BB 9: {{playerSelected.bb_9}}</p>
+                        <p>K BB: {{playerSelected.k_bb}}</p>
+                        <p>Rar: {{playerSelected.rar}}</p>
+                        <p>War: {{playerSelected.war}}</p>
+                        <p>SW Strike Rate: {{playerSelected.sw_strike_rate}}</p>
+                        <p>Hard Hit Rate: {{playerSelected.hard_hit_rate}}</p>
+                        <p>Contact Rate: {{playerSelected.contact_rate}}</p>
+                        <p>Fip: {{playerSelected.fip}}</p>
+                        <p>xFip: {{playerSelected.xfip}}</p>
+                        <p>Barrell Rate: {{playerSelected.barrel_rate}}</p>
+                        <p>GB FB Rate: {{playerSelected.gb_fb_rate}}</p>
+                      </div>
+
+                  </div>
+                </div>
+            </mat-card-content>
+        </mat-card>
+    </div>
+</div>
+
+

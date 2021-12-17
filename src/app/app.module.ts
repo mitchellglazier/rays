@@ -18,15 +18,14 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 
-import { HitterComponent } from './components/hitter/hitter.component';
-import { PitcherComponent } from './components/pitcher/pitcher.component';
+import { PlayerComponent } from './components/player/player.component';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
-  declarations: [AppComponent, HitterComponent, PitcherComponent],
+  declarations: [AppComponent, PlayerComponent],
   imports: [
     BrowserModule,
     FormsModule,
