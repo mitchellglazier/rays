@@ -1,4 +1,4 @@
-<mat-form-field class="search-todos">
+<mat-form-field style="margin:20px; width: 45vw">
     <mat-label>Search Name or Position</mat-label>
     <mat-icon matPrefix style="position: relative; top: 5px; margin-right: 5px"
       >search</mat-icon
@@ -20,42 +20,43 @@
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-<div fxLayout="row" fxLayoutAlign="space-around start" >
-    <cdk-virtual-scroll-viewport [itemSize]="5" class ="cdk-viewport" fxFlex>
-        <table style="margin: 20px; width:95%">
-            <thead>
-              <tr class="headings">
-                <td>Player ID</td>
-                <td>Name</td>
-                <td>Position</td>
-                <td>Level</td>
-                <td>Actual Level</td>
-                <td>Roster Status</td>
-                <td>Age</td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *cdkVirtualFor="let row of searchPlayers; trackBy: trackByFn;" (click)="selectRow(row)" style="cursor:pointer">
-                <td>{{row.player_id}}</td>
-                <td>{{row.name}}</td>
-                <td>{{row.position}}</td>
-                <td>{{row.level}}</td>
-                <td>{{row.actual_level}}</td>
-                <td>{{row.roster_status}}</td>
-                <td>{{row.age}}</td>
-              </tr>
-            </tbody>
-          </table>
-    </cdk-virtual-scroll-viewport>
-    <div *ngIf="playerSelected" fxFlex="35">
-        <mat-card style="margin-right: 5px;">
+<div fxLayout="row wrap" fxLayoutAlign="space-around start" >
+  
+    <cdk-virtual-scroll-viewport [itemSize]="itemSize" class ="cdk-viewport" fxFlex fxFlex.xs="100" fxFlex.sm="100">
+      <table style="margin-left: 20px; width:95%">
+          <thead>
+            <tr class="headings">
+              <td>Player ID</td>
+              <td>Name</td>
+              <td>Position</td>
+              <td>Level</td>
+              <td>Roster Status</td>
+              <td>Age</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *cdkVirtualFor="let row of searchPlayers; trackBy: trackByFn;" (click)="selectRow(row)" style="cursor:pointer">
+              <td>{{row.player_id}}</td>
+              <td>{{row.name}}</td>
+              <td>{{row.position}}</td>
+              <td>{{row.level}}</td>
+              <td>{{row.roster_status}}</td>
+              <td>{{row.age}}</td>
+            </tr>
+          </tbody>
+        </table>
+  </cdk-virtual-scroll-viewport>
+  
+    
+    <div *ngIf="playerSelected" fxFlex="50" fxFlex.xs="100" fxFlex.sm="100">
+        <mat-card style="margin-right: 5px; margin-left: 5px">
             <mat-card-header>
                 <mat-card-title>{{playerSelected.name}}</mat-card-title>
                 <mat-card-subtitle>{{playerSelected.player_id}}</mat-card-subtitle>
             </mat-card-header>
             <mat-card-content>
               <div fxLayout="row wrap" fxLayoutAlign="space-between start">
-                  <div  fxFlex="25" *ngFor="let stat of playerSelected | keyvalue">
+                  <div  fxFlex="20" *ngFor="let stat of playerSelected | keyvalue">
                     <p><b>{{stat.key}}:</b> {{stat.value || '--'}}</p>
                   </div>
               </div>

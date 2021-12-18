@@ -1,11 +1,13 @@
-<div style="text-align: center">
-    <h1>Tampa Bay Rays</h1>
+
+    <mat-toolbar color="primary">
+        <span>Tampa Bay Rays</span>
+      </mat-toolbar>
     <mat-tab-group mat-align-tabs="center">
         <mat-tab label="Hitters">
-            <app-player playerType="hitters"></app-player>
+            <app-player playerType="hitters" itemSize="15"></app-player>
         </mat-tab>
         <mat-tab label="Pitchers">
-            <app-player playerType="pitchers"></app-player>
+            <app-player playerType="pitchers" itemSize="5"></app-player>
         </mat-tab>
       </mat-tab-group>
-</div>
+

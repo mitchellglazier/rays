@@ -9,6 +9,7 @@ import { Subscription } from 'rxjs';
 })
 export class PlayerComponent implements OnInit, OnDestroy {
   @Input() playerType: string;
+  @Input() itemSize: number;
   playerSearch = ""
   searchPlayers = []
   $playersSub: Subscription;
@@ -20,7 +21,8 @@ export class PlayerComponent implements OnInit, OnDestroy {
       this.$playersSub = this.store.select("playerStat", "stats", this.playerType).subscribe(players => {
         this.players = players;
         this.searchPlayers = players
-      })
+        this.playerSelected = JSON.parse(localStorage.getItem(this.playerType))
+      }) 
   }
 
   search() {
@@ -39,6 +41,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
 
   selectRow(player) {
     this.playerSelected = player;
+    localStorage.setItem(this.playerType, JSON.stringify(player))
   }
   clearSearch() {
     this.playerSearch = '';
