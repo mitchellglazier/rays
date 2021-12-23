@@ -3,7 +3,6 @@ import { PlayerStatAction, PlayerStatActionTypes } from './playerStat.actions';
 
 export interface PlayerStatState {
   stats: any[];
-  // pitcherStats: any[];
   pending: boolean;
   error: HttpErrorResponse;
 }

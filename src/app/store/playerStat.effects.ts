@@ -12,6 +12,7 @@ import { of, Observable } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
 
+
 @Injectable()
 export class PlayerStatEffects {
   loadPlayerStats$: Observable<Action> = createEffect(() =>
@@ -19,7 +20,7 @@ export class PlayerStatEffects {
       ofType(PlayerStatActionTypes.LoadPlayerStats),
       mergeMap(() =>
         this.playerStatsService.getPlayerStats().pipe(
-          map((data: any[]) => new LoadPlayerStatsSuccess(data)),
+          map((players: any[]) => new LoadPlayerStatsSuccess(players)),
           catchError((error: HttpErrorResponse) =>
             of(new LoadPlayerStatsFailure(error))
           )
