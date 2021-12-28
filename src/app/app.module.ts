@@ -18,6 +18,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
 import {MatCardModule} from '@angular/material/card';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatSelectModule} from '@angular/material/select';
 
 import { PlayerComponent } from './components/player/player.component';
 import { FormsModule } from '@angular/forms';
@@ -54,6 +55,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     MatCardModule,
     MatGridListModule,
     MatToolbarModule,
+    MatSelectModule,
     FlexLayoutModule
   ],
   providers: [],

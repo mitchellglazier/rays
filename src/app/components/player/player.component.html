@@ -1,5 +1,5 @@
-<mat-form-field style="margin:20px; width: 45vw">
-    <mat-label>Search Name or Position</mat-label>
+<mat-form-field style="margin:20px; width: 20vw">
+    <mat-label>Search Name</mat-label>
     <mat-icon matPrefix style="position: relative; top: 5px; margin-right: 5px"
       >search</mat-icon
     >
@@ -19,6 +19,13 @@
     >
       <mat-icon>close</mat-icon>
     </button>
+  </mat-form-field>
+  <mat-form-field style="margin:20px; width: 20vw">
+    <mat-label>Level</mat-label>
+    <mat-select (selectionChange)="filterLevel()" [(ngModel)]="level">
+      <mat-option>None</mat-option>
+      <mat-option *ngFor="let level of levels" [value]="level">{{level}}</mat-option>
+    </mat-select>
   </mat-form-field>
 <div fxLayout="row wrap" fxLayoutAlign="space-around start" >
   

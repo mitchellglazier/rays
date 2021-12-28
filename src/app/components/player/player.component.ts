@@ -15,14 +15,22 @@ export class PlayerComponent implements OnInit, OnDestroy {
   playerSearch = ""
   searchPlayers: Hitter[] | Pitcher[] = []
   $playersSub: Subscription;
-  players: any[];
+  players: any[] = [];
   playerSelected: any
+  levels: string[];
+  level: string;
   constructor(private store: Store<any>) { }
 
   ngOnInit(): void {
       this.$playersSub = this.store.select("playerStat", "stats", this.playerType).subscribe((players: Hitter[] | Pitcher[]) => {
         this.players = players;
         this.searchPlayers = players
+        if (this.players) {
+          const levels = this.players.map(player => {
+            return player.level
+          })
+          this.levels = [... new Set(levels)]
+        }
         this.playerSelected = JSON.parse(localStorage.getItem(this.playerType))
       }) 
   }
@@ -31,9 +39,7 @@ export class PlayerComponent implements OnInit, OnDestroy {
     if (this.playerSearch.length > 0) {
       this.searchPlayers = this.players.filter((player: Hitter | Pitcher) => {
         return  player.name.toLowerCase().includes(
-                this.playerSearch.toLowerCase()) ||
-                player.position.toLowerCase().includes(
-                this.playerSearch.toLowerCase());
+                this.playerSearch.toLowerCase())
       });
     } else {
       this.searchPlayers = this.players;
@@ -52,6 +58,17 @@ export class PlayerComponent implements OnInit, OnDestroy {
   clearSearch() {
     this.playerSearch = '';
     this.search();
+  }
+
+  filterLevel() {
+    if (this.level) {
+      this.searchPlayers = this.players.filter((player: Hitter | Pitcher) => {
+        return player.level === this.level
+          
+      })
+    } else {
+      this.searchPlayers = this.players;
+    }
   }
 
   ngOnDestroy(): void {
