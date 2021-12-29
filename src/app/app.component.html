@@ -4,10 +4,14 @@
       </mat-toolbar>
     <mat-tab-group mat-align-tabs="center">
         <mat-tab label="Hitters">
-            <app-player playerType="hitters" itemSize="15"></app-player>
+            <ng-template matTabContent>
+                <app-player playerType="hitters" itemSize="15"></app-player>
+            </ng-template>
         </mat-tab>
         <mat-tab label="Pitchers">
-            <app-player playerType="pitchers" itemSize="5"></app-player>
+            <ng-template matTabContent>
+                <app-player playerType="pitchers" itemSize="5"></app-player>
+            </ng-template>
         </mat-tab>
       </mat-tab-group>
 

@@ -25,9 +25,10 @@ import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {MatGridListModule} from '@angular/material/grid-list';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { ScatterPlotComponent } from './components/scatter-plot/scatter-plot.component';
 
 @NgModule({
-  declarations: [AppComponent, PlayerComponent],
+  declarations: [AppComponent, PlayerComponent, ScatterPlotComponent],
   imports: [
     BrowserModule,
     FormsModule,
