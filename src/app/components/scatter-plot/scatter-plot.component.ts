@@ -11,11 +11,12 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./scatter-plot.component.scss']
 })
 export class ScatterPlotComponent implements OnInit {
-  @Input() level: string;
+  level = "MLB"
   @Input() playerType: string;
   statRange: number[];
   ageRange: number[]
-  minABs = "25"
+  minABs = "200"
+  levels: string[]
   $playersSub: Subscription;
   allPlayers: any[] = [];
   filteredPlayers: any[] = [];
@@ -34,12 +35,12 @@ export class ScatterPlotComponent implements OnInit {
         this.filteredPlayers = players.filter((player: Hitter | Pitcher) => {
           return player.level === this.level && player.ab > parseFloat(this.minABs)
         })
-        this.statRange = d3.extent(this.filteredPlayers, (p) => {
-          return p.woba
+        const levels = this.allPlayers.map(player => {
+          return player.level
         })
-        this.ageRange = d3.extent(this.filteredPlayers, (p) => {
-          return p.age
-        })
+        
+        this.levels = [... new Set(levels)]
+        this.ranges();
         this.drawPlot();
       }
     } )
@@ -89,18 +90,31 @@ private drawPlot(): void {
   .data(this.filteredPlayers)
   .enter()
   .append("text")
-  .text(p => p.name)
+  .text(p => p.name + " (" + p.position + ")")
   .attr("x", p => x(p.age))
   .attr("y", p => y(p.woba))
 }
 
-filterABs() {
+ranges() {
+  this.statRange = d3.extent(this.filteredPlayers, (p) => {
+    return p.woba
+  })
+  this.ageRange = d3.extent(this.filteredPlayers, (p) => {
+    return p.age
+  })
+}
+
+filterPlayers() {
   if (this.minABs) {
     this.filteredPlayers = this.allPlayers.filter((player: Hitter | Pitcher) => {
       return player.ab > parseFloat(this.minABs) && player.level === this.level
     })
+    this.ranges();
   } else {
-    this.filteredPlayers = this.allPlayers;
+    this.filteredPlayers = this.allPlayers.filter((player: Hitter | Pitcher) => {
+      return player.level === this.level
+    });
+    this.ranges();
   }
   this.createSvg();
   this.drawPlot();

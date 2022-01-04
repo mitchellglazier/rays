@@ -3,13 +3,18 @@
         <mat-card-title>Level: {{level}}</mat-card-title>
         <mat-card-subtitle>Stat: woba</mat-card-subtitle>
         <mat-form-field style="margin-left: 50px;">
-            <mat-label>Minimum ABs</mat-label>
-            <mat-select (selectionChange)="filterABs()" [(value)]="minABs">
-              <mat-option>None</mat-option>
+            <mat-label>Min ABs</mat-label>
+            <mat-select (selectionChange)="filterPlayers()" [(value)]="minABs">
               <mat-option value="25">25</mat-option>
               <mat-option value="50">50</mat-option>
               <mat-option value="100">100</mat-option>
               <mat-option value="200">200</mat-option>
+            </mat-select>
+          </mat-form-field>
+        <mat-form-field style="margin-left: 50px;">
+            <mat-label>Level</mat-label>
+            <mat-select (selectionChange)="filterPlayers()" [(value)]="level">
+              <mat-option *ngFor="let level of levels" value={{level}}>{{level}}</mat-option>
             </mat-select>
           </mat-form-field>
     </mat-card-header>
