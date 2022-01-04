@@ -13,10 +13,12 @@ import { Store } from '@ngrx/store';
 export class ScatterPlotComponent implements OnInit {
   @Input() level: string;
   @Input() playerType: string;
-  max: number
-  min: number
+  statRange: number[];
+  ageRange: number[]
+  minABs = "25"
   $playersSub: Subscription;
-  players: any[] = [];
+  allPlayers: any[] = [];
+  filteredPlayers: any[] = [];
   private svg;
   private margin = 50;
   private width = 600 - (this.margin * 2);
@@ -28,15 +30,16 @@ export class ScatterPlotComponent implements OnInit {
     this.createSvg();
     this.$playersSub = this.store.select("playerStat", "stats", this.playerType).subscribe((players: any) => {
       if (players) {
-        this.players = players.filter((player: Hitter | Pitcher) => {
-          return player.level === this.level
+        this.allPlayers = players
+        this.filteredPlayers = players.filter((player: Hitter | Pitcher) => {
+          return player.level === this.level && player.ab > parseFloat(this.minABs)
         })
-        this.max = Math.max.apply(Math, this.players.map(player => {
-          return player.woba
-        }))
-        this.min = Math.min.apply(Math, this.players.map(player => {
-          return player.woba
-        }))
+        this.statRange = d3.extent(this.filteredPlayers, (p) => {
+          return p.woba
+        })
+        this.ageRange = d3.extent(this.filteredPlayers, (p) => {
+          return p.age
+        })
         this.drawPlot();
       }
     } )
@@ -56,7 +59,7 @@ export class ScatterPlotComponent implements OnInit {
 private drawPlot(): void {
   // Add X axis
   const x = d3.scaleLinear()
-  .domain([18, 35])
+  .domain([(this.ageRange[0] - 1), (this.ageRange[1] + 1)])
   .range([ 0, this.width ]);
   this.svg.append("g")
   .attr("transform", "translate(0," + this.height + ")")
@@ -64,7 +67,7 @@ private drawPlot(): void {
 
   // Add Y axis
   const y = d3.scaleLinear()
-  .domain([(this.min - (this.min * .1)), (this.max * 1.1)])
+  .domain([(this.statRange[0] - (this.statRange[0] * .1)), (this.statRange[1] * 1.1)])
   .range([ this.height, 0]);
   this.svg.append("g")
   .call(d3.axisLeft(y));
@@ -72,7 +75,7 @@ private drawPlot(): void {
   // Add dots
   const dots = this.svg.append('g');
   dots.selectAll("dot")
-  .data(this.players)
+  .data(this.filteredPlayers)
   .enter()
   .append("circle")
   .attr("cx", p => x(p.age))
@@ -83,12 +86,24 @@ private drawPlot(): void {
 
   // Add labels
   dots.selectAll("text")
-  .data(this.players)
+  .data(this.filteredPlayers)
   .enter()
   .append("text")
   .text(p => p.name)
   .attr("x", p => x(p.age))
   .attr("y", p => y(p.woba))
+}
+
+filterABs() {
+  if (this.minABs) {
+    this.filteredPlayers = this.allPlayers.filter((player: Hitter | Pitcher) => {
+      return player.ab > parseFloat(this.minABs) && player.level === this.level
+    })
+  } else {
+    this.filteredPlayers = this.allPlayers;
+  }
+  this.createSvg();
+  this.drawPlot();
 }
 
 
